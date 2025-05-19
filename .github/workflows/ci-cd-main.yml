@@ -34,12 +34,13 @@ jobs:
           echo "y" | sfdx plugins:install sfdx-git-delta
 
 
-      - name: 'Authentification Salesforce' # Vous devez avoir une connexion avec Salesforce pour pouvoir deployer le code à la dernière étape.
+      - name: 'Authentification Salesforce'
         env:
           SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
         run: |
           echo $SF_AUTH_URL > auth.txt
-          sf org login sfdx-url --sfdx-url-file auth.txt --alias myOrg --set-default
+          sfdx force:auth:sfdxurl:store --sfdxurlfile auth.txt --setdefaultusername --setalias myOrg
+
 
 
       - name: Generate metadata delta using sfdx-git-delta
