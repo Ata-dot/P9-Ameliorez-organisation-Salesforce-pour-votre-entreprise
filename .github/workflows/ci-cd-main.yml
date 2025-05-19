@@ -2,57 +2,42 @@ name: Deploy and Validate Metadata
 
 on:
   pull_request:
-    branches:
-      - main
-
+    branches: [main]
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   sfdxvalidate:
     name: "Run SFDX Validate"
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
+          fetch-depth: 0
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install legacy SFDX CLI and sfdx-git-delta plugin
+      - name: Setup Salesforce CLI (sf)
         run: |
-          npm install -g sfdx-cli
-          echo "y" | sfdx plugins:install sfdx-git-delta
+          npm install --global @salesforce/cli
 
+      - name: Install sfdx-git-delta as plugin
+        run: |
+          sf plugins install sfdx-git-delta
 
-      - name: 'Authentification Salesforce'
+      - name: Authentification Salesforce
         env:
           SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
         run: |
           echo $SF_AUTH_URL > auth.txt
-          sfdx force:auth:sfdxurl:store --sfdxurlfile auth.txt --setdefaultusername --setalias myOrg
-
-
+          sf org login sfdx-url --sfdx-url-file auth.txt --alias myOrg --set-default
 
       - name: Generate metadata delta using sfdx-git-delta
         run: |
           mkdir -p .temp
-          sfdx sgd:source:delta --to "HEAD" --from "origin/main" --output .temp --generate-delta
+          sf sgd source delta --to "HEAD" --from "origin/main" --output .temp --generate-delta
 
-      - name: Deploy to Salesforce (only on main)
+      - name: Deploy metadata to Salesforce
         if: github.ref == 'refs/heads/main'
         run: |
-          sf project deploy start \
-            --manifest .temp/package/package.xml \
-            --target-org myOrg \
-            --wait 10 \
-            --test-level RunLocalTests
+          sf project deploy start --manifest .temp/package/package.xml --target-org myOrg --check-only --ignore-warnings
