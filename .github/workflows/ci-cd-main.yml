@@ -52,7 +52,7 @@ jobs:
 
           ls -R .temp  
       - name: Deploy metadata to Salesforce
-        if: github.ref == 'refs/heads/main'
+        
         run: |
 
           ls -R .temp      
