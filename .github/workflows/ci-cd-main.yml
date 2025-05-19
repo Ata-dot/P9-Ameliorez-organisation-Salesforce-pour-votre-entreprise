@@ -8,7 +8,7 @@ on:
 
 jobs:
   sfdxvalidate:
-    name: "Run SF Validate"
+    name: "Run SFDX Validate"
     runs-on: ubuntu-latest
 
     steps:
@@ -18,23 +18,35 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Salesforce CLI (sf)
-        uses: salesforcecli/github-action-install-sf@v2
+        run: |
+          npm install --global @salesforce/cli
+
+      - name: Install Salesforce CLI (SFDX)
+        run: |
+          wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-x64.tar.xz
+          mkdir sfdx-cli
+          tar xJf sfdx-linux-x64.tar.xz -C sfdx-cli --strip-components 1
+          ./sfdx-cli/install
+          echo "$HOME/.local/sfdx/bin" >> $GITHUB_PATH
+
+      - name: Verify Salesforce CLI
+        run: sfdx --version
 
       - name: Install sfdx-git-delta plugin
         run: |
-          sf plugins install sfdx-git-delta
-
-      - name: Authenticate to Salesforce
+          sfdx plugins:install sfdx-git-delta
+      
+      - name: Authentification Salesforce
         env:
           SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
         run: |
-          echo "$SF_AUTH_URL" > auth.txt
+          echo $SF_AUTH_URL > auth.txt
           sf org login sfdx-url --sfdx-url-file auth.txt --alias myOrg --set-default
 
-      - name: Generate metadata delta
+      - name: Generate metadata delta using sfdx-git-delta
         run: |
           mkdir -p .temp
-          sfdx sgd:source:delta --to "HEAD" --from "origin/main" --output .temp --generate-delta
+          sf sgd source delta --to "HEAD" --from "origin/main" --output .temp --generate-delta
 
       - name: Deploy metadata to Salesforce
         if: github.ref == 'refs/heads/main'
