@@ -47,7 +47,7 @@ jobs:
       - name: Generate metadata delta using sfdx-git-delta
         run: |
           mkdir -p .temp
-          sf sgd source delta --to "HEAD" --from "origin/main" --output .temp --generate-delta
+          sfdx sgd:source:delta --to "HEAD" --from "origin/main" --output .temp --generate-delta
 
       - name: Deploy metadata to Salesforce
         if: github.ref == 'refs/heads/main'
