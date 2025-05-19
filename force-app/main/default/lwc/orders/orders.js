@@ -6,10 +6,12 @@ export default class Orders extends LightningElement {
     sumOrdersOfCurrentAccount;  // Somme des commandes pour le compte actuel
     isLoading = true;  // Indicateur de chargement
     hasError = false;  // Indicateur d'erreur
+    
 
     // Méthode appelée lors de la connexion du composant
     connectedCallback() {
         console.log('recordId reçu :', this.recordId);
+        console.log('Hello from Orders component');
         this.loadData();  // Charge les données lors de l'initialisation
     }
 

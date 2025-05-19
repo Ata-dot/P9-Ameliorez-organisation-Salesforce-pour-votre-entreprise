@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 05-06-2025
+ * @last modified on  : 05-19-2025
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 @isTest
@@ -51,7 +51,7 @@ public class UpdateAccountCATest {
     
         // Création manuelle de deux commandes pour le même compte
         List<Order> orders = new List<Order>();
-        for (Integer i = 0; i < 2; i++) {
+        for (Integer i = 0; i < 3; i++) {
             Order order = new Order(
                 AccountId = acc.Id,
                 EffectiveDate = Date.today(),
