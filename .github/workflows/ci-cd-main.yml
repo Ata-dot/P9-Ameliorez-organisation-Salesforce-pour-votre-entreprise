@@ -34,7 +34,7 @@ jobs:
           echo "y" | npm install sfdx-git-delta@3.3.0 -g
 
       - name: 'Authentification Salesforce' # Vous devez avoir une connexion avec Salesforce pour pouvoir deployer le code à la dernière étape.
-      env:
+        env:
           SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
         run: |
           echo $SF_AUTH_URL > auth.txt
