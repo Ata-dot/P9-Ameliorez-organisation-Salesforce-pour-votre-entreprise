@@ -21,10 +21,21 @@ jobs:
         run: |
           npm install --global @salesforce/cli
 
-      - name: Install sfdx-git-delta as plugin
+      - name: Install Salesforce CLI (SFDX)
         run: |
-          sf plugins install sfdx-git-delta
+          wget https://developer.salesforce.com/media/salesforce-cli/sfdx-linux-x64.tar.xz
+          mkdir sfdx-cli
+          tar xJf sfdx-linux-x64.tar.xz -C sfdx-cli --strip-components 1
+          ./sfdx-cli/install
+          echo "$HOME/.local/sfdx/bin" >> $GITHUB_PATH
 
+      - name: Verify Salesforce CLI
+        run: sfdx --version
+
+      - name: Install sfdx-git-delta plugin
+        run: |
+          sfdx plugins:install sfdx-git-delta
+      
       - name: Authentification Salesforce
         env:
           SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
