@@ -54,6 +54,6 @@ jobs:
       - name: Deploy metadata to Salesforce
         
         run: |
-     
-         sfdx force:source:deploy -x .temp/package/package.xml -u myOrg --checkonly --ignorewarnings
+
+         sfdx force:source:deploy -x .temp/package/package.xml -u myOrg --test-level RunLocalTests --ignorewarnings
  
