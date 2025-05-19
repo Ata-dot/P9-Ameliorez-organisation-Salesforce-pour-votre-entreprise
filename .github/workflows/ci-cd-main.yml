@@ -41,9 +41,9 @@ jobs:
           sf org login sfdx-url --sfdx-url-file auth.txt --alias myOrg --set-default
 
 
-      - name: 'Generate metadata delta pull request'  # Utilisez le plug-in sfdx-git-delta pour effectuer un delta, generer le package xml dans un fichier temporaire ex : .temp
-        run:  # A faire
+      # - name: 'Generate metadata delta pull request'  # Utilisez le plug-in sfdx-git-delta pour effectuer un delta, generer le package xml dans un fichier temporaire ex : .temp
+      #   run:  # A faire
 
-      - name: 'Déployer les métadonnées sur la branch main'
-        if: github.ref == 'refs/heads/main'
-        run:  # A faire déployer le code venant du fichier package.xml généré précédemment 
+      # - name: 'Déployer les métadonnées sur la branch main'
+      #   if: github.ref == 'refs/heads/main'
+      #   run:  # A faire déployer le code venant du fichier package.xml généré précédemment 
