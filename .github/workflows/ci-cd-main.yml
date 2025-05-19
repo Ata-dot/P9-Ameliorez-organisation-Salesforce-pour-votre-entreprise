@@ -55,5 +55,4 @@ jobs:
         
         run: |
 
-         sfdx force:source:deploy -x .temp/package/package.xml -u myOrg --test-level RunLocalTests --ignorewarnings
- 
+         sfdx force:source:deploy -x .temp/package/package.xml -u myOrg -l RunLocalTests -w 10 --ignorewarnings
