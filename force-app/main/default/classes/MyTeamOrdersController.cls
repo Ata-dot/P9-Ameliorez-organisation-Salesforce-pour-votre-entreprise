@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 05-08-2025
+ * @last modified on  : 05-19-2025
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public with sharing class MyTeamOrdersController {
@@ -30,7 +30,9 @@ public with sharing class MyTeamOrdersController {
 
         // Si la liste est vide, aucune commande activée, donc retour de 0
         if (results.isEmpty()) {
+            // Aucune commande activée trouvée, retourner 0
             return 0;
+            
         }
 
         // Récupération de la somme du montant
