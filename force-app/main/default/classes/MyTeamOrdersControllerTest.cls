@@ -1,7 +1,7 @@
 /**
  * @description       : Classe de test pour MyTeamOrdersController.
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
- * @last modified on  : 05-08-2025
+ * @last modified on  : 05-19-2025
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 @isTest
@@ -29,7 +29,7 @@ private class MyTeamOrdersControllerTest {
 
         // Création des commandes avec statut "Draft"
         List<Order> orders = new List<Order>();
-        for (Integer i = 0; i < 5; i++) {
+        for (Integer i = 0; i < 10; i++) {
             orders.add(new Order(
                 AccountId = testAccount.Id,
                 Status = 'Draft',
