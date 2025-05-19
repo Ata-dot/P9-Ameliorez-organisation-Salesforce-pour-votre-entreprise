@@ -50,10 +50,10 @@ jobs:
           mkdir -p .temp
           sfdx sgd:source:delta --to "HEAD" --from "origin/main" --output .temp --generate-delta
 
-          echo .temp/  
+          ls -R .temp  
       - name: Deploy metadata to Salesforce
         if: github.ref == 'refs/heads/main'
         run: |
 
-          echo .temp/      
+          ls -R .temp      
           sf project deploy start --manifest .temp/package/package.xml --target-org myOrg --check-only --ignore-warnings
