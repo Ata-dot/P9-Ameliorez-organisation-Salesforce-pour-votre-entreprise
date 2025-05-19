@@ -50,10 +50,10 @@ jobs:
           mkdir -p .temp
           sfdx sgd:source:delta --to "HEAD" --from "origin/main" --output .temp --generate-delta
 
-          ls -R .temp  
+          
       - name: Deploy metadata to Salesforce
         
         run: |
-
-          ls -R .temp      
-          sf project deploy start --manifest .temp/package/package.xml --target-org myOrg --check-only --ignore-warnings
+     
+         sfdx force:source:deploy -x .temp/package/package.xml -u myOrg --checkonly --ignorewarnings
+ 
