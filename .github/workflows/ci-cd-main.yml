@@ -35,7 +35,7 @@ jobs:
 
       - name: Install sfdx-git-delta plugin
         run: |
-          sfdx plugins:install sfdx-git-delta
+          y | sfdx plugins:install sfdx-git-delta
       
       - name: Authentification Salesforce
         env:
